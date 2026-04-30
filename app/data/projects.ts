@@ -95,7 +95,7 @@ export const projects: Project[] = [
     title: 'SPRING MCB TOWER', 
     slug: 'spring-mcb-tower',
     address: '43, Bhojohori Saha Street, Wari, Dhaka', 
-    image: '/Spring MCB Tower.jpg',
+    image: '/Spring Mcb Tower.jpg',
     status: 'ongoing',
     gallery: [
       { url: '/Spring Mcb Tower.jpg', type: 'building' },
