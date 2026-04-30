@@ -50,7 +50,7 @@ export default function CompletedProjects() {
                 </div>
                 
                 <div className="flex justify-between gap-[5px] mt-auto">
-                  <Link href={`/project-details/${project.slug}`} className="flex-1 bg-white flex justify-between items-center px-[6px] py-[4px] text-[10px] font-bold text-[#555] shadow-[0_1px_2px_rgba(0,0,0,0.2)] hover:bg-[#f0f0f0] transition-colors no-underline">
+                  <Link href={`/projects/${project.slug}`} className="flex-1 bg-white flex justify-between items-center px-[6px] py-[4px] text-[10px] font-bold text-[#555] shadow-[0_1px_2px_rgba(0,0,0,0.2)] hover:bg-[#f0f0f0] transition-colors no-underline">
                     <span>Details</span>
                     <span className="text-[#aaa] font-normal text-[12px] leading-none">&gt;</span>
                   </Link>
