@@ -37,9 +37,9 @@ export default function ProjectDetails({ params }: { params: Promise<{ slug: str
   };
 
   return (
-    <div className="flex justify-between relative h-[600px] max-h-[80vh]">
+    <div className="flex flex-col md:flex-row justify-between relative min-h-[600px] md:h-[600px] md:max-h-[80vh]">
       {/* Project Details Left Sidebar */}
-      <div className="w-[25%] bg-[#1c1c1c] flex flex-col border-r border-black">
+      <div className="w-full md:w-[25%] bg-[#1c1c1c] flex flex-col border-b md:border-b-0 md:border-r border-black">
         <div className="p-[20px] pb-[30px] border-b border-black">
           <h1 className="text-white text-[28px] font-bold leading-tight mb-[5px]">{project.title}</h1>
           <p className="text-[#bbb] text-[12px]">{project.address}</p>
@@ -80,7 +80,7 @@ export default function ProjectDetails({ params }: { params: Promise<{ slug: str
       </div>
 
       {/* Main Content Area */}
-      <div className="w-[75%] bg-[#d9eff7] flex flex-col relative overflow-hidden">
+      <div className="w-full md:w-[75%] bg-[#d9eff7] flex flex-col relative overflow-hidden min-h-[400px] md:min-h-0">
         {/* Main Image Viewer */}
         <div className="flex-1 relative flex items-center justify-center p-[20px] min-h-0">
           <img 

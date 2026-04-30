@@ -7,7 +7,7 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <div className="w-[23%] flex flex-col">
+    <div className="w-full md:w-[23%] flex flex-col mt-[10px] md:mt-0">
       <Link href="/ongoing-projects" className={`text-right py-[15px] px-[10px] mb-[2px] text-[0.8rem] border-b-[2px] border-black block no-underline ${pathname === '/ongoing-projects' ? 'bg-[#333] text-white' : 'bg-[#ddd] text-[#333]'}`}>
         <div className={`text-[0.9rem] ${pathname === '/ongoing-projects' ? 'text-white' : 'text-[#444]'}`}>ONGOING</div>
         <div className={`text-[0.65rem] ${pathname === '/ongoing-projects' ? 'text-[#ccc]' : 'text-[#777]'}`}>projects in progress</div>

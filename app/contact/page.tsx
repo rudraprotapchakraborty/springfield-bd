@@ -8,13 +8,13 @@ export default function Contact() {
 
   return (
     <>
-      <div className="flex justify-between">
-        <div className="w-[75%]">
-          <div className="flex h-[400px]">
-            <div className="w-[35%] bg-[url('/building.png')] bg-cover bg-center border-r-[2px] border-black relative after:content-[''] after:absolute after:inset-0 after:bg-[repeating-linear-gradient(45deg,rgba(0,0,0,0.25),rgba(0,0,0,0.25)_1px,transparent_1px,transparent_5px)] after:pointer-events-none flex flex-col justify-between">
+      <div className="flex flex-col md:flex-row justify-between">
+        <div className="w-full md:w-[75%]">
+          <div className="flex flex-col sm:flex-row min-h-[400px] h-auto">
+            <div className="w-full h-[200px] sm:h-auto sm:w-[35%] bg-[url('/building.png')] bg-cover bg-center border-b-[2px] sm:border-b-0 sm:border-r-[2px] border-black relative after:content-[''] after:absolute after:inset-0 after:bg-[repeating-linear-gradient(45deg,rgba(0,0,0,0.25),rgba(0,0,0,0.25)_1px,transparent_1px,transparent_5px)] after:pointer-events-none flex flex-col justify-between">
               <div className="z-10 bg-white/70 inline-block px-4 py-2 font-bold text-[#555] text-[1.2rem] mt-2 self-start">CONTACT US</div>
             </div>
-            <div className="w-[65%] bg-[#1a1a1a] flex flex-col">
+            <div className="w-full sm:w-[65%] bg-[#1a1a1a] flex flex-col">
               <div className="flex border-b border-[#333]">
                 <div 
                   className={`py-[5px] px-[15px] text-[0.85rem] border-r border-[#222] flex-1 flex justify-between items-center cursor-pointer ${activeTab === 'general' ? 'bg-[#333] text-white font-bold' : 'bg-[#a4b3d1] text-[#555]'}`}
@@ -44,26 +44,25 @@ export default function Contact() {
                 ) : (
                   <div className="pt-[10px]">
                     <h3 className="text-white text-[1.1rem] mb-[20px] font-bold">Send Your Fedback</h3>
-                    
-                    <form className="flex flex-col gap-3 text-white text-[0.9rem] font-bold w-[95%]">
-                      <div className="flex justify-between items-center">
-                        <label>Name :</label>
-                        <input type="text" className="w-[300px] h-[25px] bg-white text-black px-2 outline-none" />
+                                        <form className="flex flex-col gap-3 text-white text-[0.9rem] font-bold w-full sm:w-[95%]">
+                      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+                        <label className="mb-1 sm:mb-0">Name :</label>
+                        <input type="text" className="w-full sm:w-[300px] h-[25px] bg-white text-black px-2 outline-none" />
                       </div>
                       
-                      <div className="flex justify-between items-center">
-                        <label>E-mail :</label>
-                        <input type="email" className="w-[300px] h-[25px] bg-white text-black px-2 outline-none" />
+                      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+                        <label className="mb-1 sm:mb-0">E-mail :</label>
+                        <input type="email" className="w-full sm:w-[300px] h-[25px] bg-white text-black px-2 outline-none" />
                       </div>
                       
-                      <div className="flex justify-between items-center">
-                        <label>Phone :</label>
-                        <input type="text" className="w-[300px] h-[25px] bg-white text-black px-2 outline-none" />
+                      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+                        <label className="mb-1 sm:mb-0">Phone :</label>
+                        <input type="text" className="w-full sm:w-[300px] h-[25px] bg-white text-black px-2 outline-none" />
                       </div>
                       
-                      <div className="flex justify-between items-start mt-2">
-                        <label>Comments :</label>
-                        <textarea className="w-[300px] h-[150px] bg-white text-black p-2 outline-none resize-none"></textarea>
+                      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mt-2">
+                        <label className="mb-1 sm:mb-0">Comments :</label>
+                        <textarea className="w-full sm:w-[300px] h-[150px] bg-white text-black p-2 outline-none resize-none"></textarea>
                       </div>
                       
                       <div className="flex justify-end mt-2 gap-2">

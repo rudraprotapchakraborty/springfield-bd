@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="bg-black text-white font-sans flex justify-center">
-        <div className="w-[980px] bg-black mt-[10px]">
+        <div className="w-full max-w-[980px] bg-black mt-[10px] px-4 md:px-0">
           <Header />
           <Navigation />
           {children}

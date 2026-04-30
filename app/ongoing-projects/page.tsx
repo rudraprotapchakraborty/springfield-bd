@@ -12,11 +12,11 @@ export default function OngoingProjects() {
 
   return (
     <>
-      <div className="flex justify-between relative">
-      <div className="w-[75%] bg-black">
-        <div className="grid grid-cols-4 grid-rows-4 gap-[2px] bg-black">
-          {/* Left Cell - Spans 2 Rows */}
-          <div className="col-[1] row-[1/span_2] relative bg-[url('/building.png')] bg-cover bg-center after:content-[''] after:absolute after:inset-0 after:bg-[repeating-linear-gradient(45deg,rgba(255,255,255,0.4),rgba(255,255,255,0.4)_1px,transparent_1px,transparent_5px)] after:pointer-events-none" style={{ gridColumn: 1, gridRow: '1 / span 2' }}>
+      <div className="flex flex-col md:flex-row justify-between relative">
+      <div className="w-full md:w-[75%] bg-black">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[2px] bg-black">
+          {/* Left Cell - Spans 2 Rows on Desktop */}
+          <div className="lg:col-span-1 lg:row-span-2 sm:col-span-2 h-[200px] lg:h-auto relative bg-[url('/building.png')] bg-cover bg-center after:content-[''] after:absolute after:inset-0 after:bg-[repeating-linear-gradient(45deg,rgba(255,255,255,0.4),rgba(255,255,255,0.4)_1px,transparent_1px,transparent_5px)] after:pointer-events-none">
             <div className="absolute inset-0 bg-gradient-to-br from-white/70 via-transparent to-transparent z-10"></div>
             <div className="relative z-20 p-[15px]">
               <div className="text-[#444] font-bold text-[18px] mb-[2px]">ONGOING</div>
@@ -25,21 +25,17 @@ export default function OngoingProjects() {
           </div>
 
           {filteredProjects.length === 0 ? (
-            <div className="col-[2/span_3] row-[1/span_2] flex items-center justify-center bg-[#1a1a1a] min-h-[400px]">
+            <div className="sm:col-span-2 lg:col-span-3 lg:row-span-2 flex items-center justify-center bg-[#1a1a1a] min-h-[400px]">
               <div className="text-[#888] text-[24px] font-bold">no ongoing projects</div>
             </div>
           ) : (
             <>
               {/* Project Cards */}
               {filteredProjects.map((project, index) => {
-            const row = Math.floor(index / 3) + 1;
-            const col = (index % 3) + 2;
-            
             return (
               <div 
                 key={index} 
                 className="bg-[#b5b5b5] p-[10px] flex flex-col justify-between h-[200px]"
-                style={{ gridColumn: col, gridRow: row }}
               >
                 <div>
                   <div className="text-[#55647a] font-bold text-[11px] uppercase mb-[2px]">{project.title}</div>
@@ -78,8 +74,8 @@ export default function OngoingProjects() {
       </div>
 
       {feedbackProject && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-          <div className="bg-white p-[30px] w-[550px] shadow-2xl relative border-[2px] border-[#aaa]">
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+          <div className="bg-white p-[20px] md:p-[30px] w-full md:w-[550px] max-w-[550px] shadow-2xl relative border-[2px] border-[#aaa] max-h-[90vh] overflow-y-auto">
             <button 
               onClick={() => setFeedbackProject(null)}
               className="absolute top-[10px] right-[15px] text-[20px] font-bold text-gray-600 hover:text-black"
@@ -104,7 +100,7 @@ export default function OngoingProjects() {
                 <label className="w-[120px] font-serif font-bold text-[18px] mt-[2px] text-black">Comments :</label>
                 <textarea className="border border-gray-400 flex-1 h-[140px] px-[5px] py-[3px] text-[16px] resize-y text-black"></textarea>
               </div>
-              <div className="flex ml-[120px] gap-[10px]">
+              <div className="flex md:ml-[120px] gap-[10px] mt-[10px]">
                 <button type="submit" className="border border-gray-400 bg-[#f8f8f8] px-[15px] py-[3px] text-[16px] text-black hover:bg-[#e8e8e8]">Submit</button>
                 <button type="reset" className="border border-gray-400 bg-[#f8f8f8] px-[15px] py-[3px] text-[16px] text-black hover:bg-[#e8e8e8]">Reset</button>
               </div>
