@@ -98,9 +98,9 @@ export const projects: Project[] = [
     image: '/Spring MCB Tower.jpg',
     status: 'ongoing',
     gallery: [
-      { url: '/Spring MCB Tower.jpg', type: 'building' },
-      { url: '/Spring MCB Tower 2.jpg', type: 'floor_plan' },
-      { url: '/Spring MCB Tower 3.jpg', type: 'floor_plan' },
+      { url: '/Spring Mcb Tower.jpg', type: 'building' },
+      { url: '/Spring Mcb Tower 2.jpg', type: 'floor_plan' },
+      { url: '/Spring Mcb Tower 3.jpg', type: 'floor_plan' },
       
     ]
   },
