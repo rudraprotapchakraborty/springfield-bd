@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { motion, useInView, useMotionValue, useTransform, animate } from 'framer-motion';
+import { motion, useInView, useMotionValue, useTransform, animate, useScroll } from 'framer-motion';
 import { ArrowDown, MessageCircle } from 'lucide-react';
 import Link from 'next/link';
 
@@ -45,6 +45,9 @@ const statsRight = [
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('background');
+  const { scrollY } = useScroll();
+  const buildingY = useTransform(scrollY, [0, 500], [0, -100]);
+  const buildingScale = useTransform(scrollY, [0, 500], [1.1, 1.2]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -98,17 +101,18 @@ export default function Home() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 200 }}
+            initial={{ opacity: 0, y: 300 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.5, ease: 'easeOut' }}
-            className="w-full md:w-3/5 flex justify-center items-end h-[50vh] md:h-[75vh] relative z-0 order-1 md:order-2"
+            transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
+            style={{ y: buildingY, scale: buildingScale }}
+            className="w-full md:w-3/5 flex justify-center items-start h-[45vh] md:h-[65vh] relative z-0 order-1 md:order-2 overflow-hidden"
           >
-            <div className="relative w-full h-full max-w-2xl">
+            <div className="relative w-full h-[150%] max-w-2xl -mt-[10%]">
               <Image
                 src="/building.png"
                 alt="Modern Landmark Building"
                 fill
-                className="object-contain object-bottom scale-110 origin-bottom"
+                className="object-contain object-top"
                 priority
               />
             </div>
