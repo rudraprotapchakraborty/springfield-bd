@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Suspense } from "react";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -25,7 +26,9 @@ export default function RootLayout({
       <body className={`${inter.className} bg-[#f8fbf4] dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 min-h-screen flex flex-col transition-colors duration-300`}>
         <Providers attribute="data-theme" defaultTheme="system" enableSystem>
           <CustomCursor />
-          <PageLoader />
+          <Suspense fallback={null}>
+            <PageLoader />
+          </Suspense>
           <Header />
           <main className="flex-grow w-full">
             {children}
