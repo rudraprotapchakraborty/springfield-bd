@@ -87,7 +87,7 @@ export default function Home() {
             variants={containerVariants}
             initial="hidden"
             animate="show"
-            className="w-full md:w-1/4 flex flex-col gap-12 md:gap-24 text-center md:text-left z-10 order-2 md:order-1 mt-12 md:mt-0"
+            className="w-full md:w-1/5 flex flex-col gap-12 md:gap-24 text-center md:text-left z-10 order-2 md:order-1 mt-12 md:mt-0"
           >
             {statsLeft.map((stat, i) => (
               <motion.div key={i} variants={itemVariants} className="flex flex-col items-center">
@@ -97,19 +97,18 @@ export default function Home() {
             ))}
           </motion.div>
 
-          {/* Central Building Image */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.2, ease: 'easeOut' }}
-            className="w-full md:w-2/4 flex justify-center items-end h-[40vh] md:h-[60vh] relative z-0 order-1 md:order-2"
+            initial={{ opacity: 0, y: 200 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.5, ease: 'easeOut' }}
+            className="w-full md:w-3/5 flex justify-center items-end h-[50vh] md:h-[75vh] relative z-0 order-1 md:order-2"
           >
-            <div className="relative w-full h-full max-w-md">
+            <div className="relative w-full h-full max-w-2xl">
               <Image
                 src="/building.png"
                 alt="Modern Landmark Building"
                 fill
-                className="object-contain object-bottom"
+                className="object-contain object-bottom scale-110 origin-bottom"
                 priority
               />
             </div>
@@ -120,7 +119,7 @@ export default function Home() {
             variants={containerVariants}
             initial="hidden"
             animate="show"
-            className="w-full md:w-1/4 flex flex-col gap-12 md:gap-24 text-center md:text-right z-10 order-3 md:order-3 mt-12 md:mt-0"
+            className="w-full md:w-1/5 flex flex-col gap-12 md:gap-24 text-center md:text-right z-10 order-3 md:order-3 mt-12 md:mt-0"
           >
             {statsRight.map((stat, i) => (
               <motion.div key={i} variants={itemVariants} className="flex flex-col items-center">
