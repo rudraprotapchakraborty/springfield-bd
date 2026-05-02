@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Upload, Send, Users, Briefcase } from 'lucide-react';
+import { FileUp, Send, Users, Briefcase } from 'lucide-react';
 
 export default function Career() {
   const [activeTab, setActiveTab] = useState('hr_philosophy');
