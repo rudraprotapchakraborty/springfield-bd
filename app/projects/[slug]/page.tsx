@@ -1,14 +1,17 @@
 'use client';
 
 import { use, useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { projects, Project } from './../../data/projects';
-import Sidebar from './../../components/Sidebar'; // We still need the main sidebar for the right?
-import { notFound } from 'next/navigation';
+import { MapPin, Building, Maximize2, ChevronLeft, ChevronRight, X, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
 export default function ProjectDetails({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = use(params);
   const [project, setProject] = useState<Project | null>(null);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [showFeedback, setShowFeedback] = useState(false);
 
   useEffect(() => {
     const foundProject = projects.find(p => p.slug === resolvedParams.slug);
@@ -18,15 +21,15 @@ export default function ProjectDetails({ params }: { params: Promise<{ slug: str
   }, [resolvedParams.slug]);
 
   if (!project) {
-    return <div className="p-10 text-white">Loading...</div>; // Or not found if we handle it better
+    return (
+      <div className="min-h-screen bg-[#f8fbf4] flex items-center justify-center">
+        <div className="animate-pulse flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-4 border-[#00a651] border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-zinc-500 font-medium">Loading project details...</p>
+        </div>
+      </div>
+    );
   }
-
-  const handleSidebarClick = (type: string) => {
-    const index = project.gallery.findIndex(img => img.type === type);
-    if (index !== -1) {
-      setActiveImageIndex(index);
-    }
-  };
 
   const handlePrev = () => {
     setActiveImageIndex(prev => (prev === 0 ? project.gallery.length - 1 : prev - 1));
@@ -37,78 +40,224 @@ export default function ProjectDetails({ params }: { params: Promise<{ slug: str
   };
 
   return (
-    <div className="flex flex-col md:flex-row justify-between relative min-h-[600px] md:h-[600px] md:max-h-[80vh]">
-      {/* Project Details Left Sidebar */}
-      <div className="w-full md:w-[25%] bg-[#1c1c1c] flex flex-col border-b md:border-b-0 md:border-r border-black">
-        <div className="p-[20px] pb-[30px] border-b border-black">
-          <h1 className="text-white text-[28px] font-bold leading-tight mb-[5px]">{project.title}</h1>
-          <p className="text-[#bbb] text-[12px]">{project.address}</p>
-        </div>
-
-        <div className="p-[20px] border-b border-black">
-          <h3 className="text-[#888] font-bold text-[14px] mb-[15px] tracking-wide">LOCATION</h3>
-          <button 
-            onClick={() => handleSidebarClick('location')}
-            className="bg-white flex justify-between items-center px-[10px] py-[5px] text-[12px] font-bold text-[#333] shadow-[0_1px_2px_rgba(0,0,0,0.3)] w-[100px] hover:bg-gray-100"
-          >
-            <span>Details</span>
-            <span className="text-[#888] font-normal leading-none">&gt;</span>
-          </button>
-        </div>
-
-        <div className="p-[20px] border-b border-black">
-          <h3 className="text-[#888] font-bold text-[14px] mb-[15px] tracking-wide">PROPERTIES</h3>
-          <button 
-            onClick={() => handleSidebarClick('building')}
-            className="bg-white flex justify-between items-center px-[10px] py-[5px] text-[12px] font-bold text-[#333] shadow-[0_1px_2px_rgba(0,0,0,0.3)] w-[100px] hover:bg-gray-100"
-          >
-            <span>Details</span>
-            <span className="text-[#888] font-normal leading-none">&gt;</span>
-          </button>
-        </div>
-
-        <div className="p-[20px] border-b border-black flex-1">
-          <h3 className="text-[#888] font-bold text-[14px] mb-[15px] tracking-wide">FLOOR PLAN</h3>
-          <button 
-            onClick={() => handleSidebarClick('floor_plan')}
-            className="bg-white flex justify-between items-center px-[10px] py-[5px] text-[12px] font-bold text-[#333] shadow-[0_1px_2px_rgba(0,0,0,0.3)] w-[100px] hover:bg-gray-100"
-          >
-            <span>Details</span>
-            <span className="text-[#888] font-normal leading-none">&gt;</span>
-          </button>
-        </div>
-      </div>
-
-      {/* Main Content Area */}
-      <div className="w-full md:w-[75%] bg-[#d9eff7] flex flex-col relative overflow-hidden min-h-[400px] md:min-h-0">
-        {/* Main Image Viewer */}
-        <div className="flex-1 relative flex items-center justify-center p-[20px] min-h-0">
-          <img 
-            src={project.gallery[activeImageIndex]?.url} 
-            alt={`${project.title} - ${project.gallery[activeImageIndex]?.type}`} 
-            className="max-w-full max-h-full object-contain drop-shadow-lg"
-          />
-        </div>
-
-        {/* Bottom Carousel */}
-        <div className="h-[120px] bg-white/40 flex items-center px-[10px] relative z-10 border-t border-[#b8dae6]">
-          <button onClick={handlePrev} className="text-[#555] text-[20px] px-[10px] hover:text-black">&lt;</button>
-          
-          <div className="flex-1 flex overflow-x-auto gap-[10px] px-[10px] hide-scrollbar items-center justify-start h-full py-[10px]">
-            {project.gallery.map((img, index) => (
-              <div 
-                key={index} 
-                onClick={() => setActiveImageIndex(index)}
-                className={`flex-shrink-0 w-[120px] h-[80px] bg-white cursor-pointer transition-all duration-200 border-[3px] ${activeImageIndex === index ? 'border-[#8bcbea] shadow-md scale-105' : 'border-transparent opacity-70 hover:opacity-100'}`}
-              >
-                <img src={img.url} className="w-full h-full object-cover" alt="thumbnail" />
-              </div>
-            ))}
+    <div className="min-h-screen bg-[#f8fbf4] pt-24 pb-12">
+      <div className="container mx-auto px-4 md:px-8 max-w-7xl">
+        
+        {/* Header Section */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8"
+        >
+          <Link href="/completed-projects" className="text-[#00a651] text-sm font-semibold hover:text-zinc-900 transition-colors mb-4 inline-block">
+            ← Back to Projects
+          </Link>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-light text-zinc-900 mb-4">{project.title}</h1>
+          <div className="flex items-center gap-2 text-zinc-500">
+            <MapPin size={18} />
+            <span className="text-lg">{project.address}</span>
           </div>
+        </motion.div>
+
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           
-          <button onClick={handleNext} className="text-[#555] text-[20px] px-[10px] hover:text-black">&gt;</button>
+          {/* Main Gallery Area (Spans 2 columns) */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="lg:col-span-2 bg-white rounded-3xl p-4 shadow-sm border border-zinc-100 flex flex-col"
+          >
+            <div className="relative flex-grow rounded-2xl overflow-hidden bg-zinc-50 min-h-[50vh] flex items-center justify-center group">
+              <AnimatePresence mode="wait">
+                <motion.img 
+                  key={activeImageIndex}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  src={project.gallery[activeImageIndex]?.url} 
+                  alt={`${project.title} - ${project.gallery[activeImageIndex]?.type}`} 
+                  className="max-w-full max-h-[70vh] object-contain drop-shadow-xl"
+                />
+              </AnimatePresence>
+              
+              <button 
+                onClick={() => setIsFullscreen(true)}
+                className="absolute top-4 right-4 bg-white/80 backdrop-blur-md p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white text-zinc-700"
+              >
+                <Maximize2 size={20} />
+              </button>
+
+              <button onClick={handlePrev} className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-md p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white text-zinc-700">
+                <ChevronLeft size={24} />
+              </button>
+              <button onClick={handleNext} className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-md p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white text-zinc-700">
+                <ChevronRight size={24} />
+              </button>
+
+              <div className="absolute bottom-4 left-4 bg-black/50 backdrop-blur-md text-white px-4 py-2 rounded-full text-sm font-medium capitalize">
+                {project.gallery[activeImageIndex]?.type.replace('_', ' ')}
+              </div>
+            </div>
+
+            {/* Thumbnail Carousel */}
+            <div className="flex overflow-x-auto gap-4 py-4 mt-4 hide-scrollbar">
+              {project.gallery.map((img, index) => (
+                <button 
+                  key={index} 
+                  onClick={() => setActiveImageIndex(index)}
+                  className={`flex-shrink-0 w-24 h-16 rounded-xl overflow-hidden transition-all duration-300 relative ${
+                    activeImageIndex === index 
+                      ? 'ring-2 ring-[#00a651] shadow-md scale-105' 
+                      : 'opacity-60 hover:opacity-100'
+                  }`}
+                >
+                  <img src={img.url} className="w-full h-full object-cover" alt={`thumbnail ${index + 1}`} />
+                </button>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Details Sidebar */}
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="flex flex-col gap-6"
+          >
+            {/* Quick Info Card */}
+            <div className="bg-white rounded-3xl p-8 shadow-sm border border-zinc-100">
+              <h3 className="text-xl font-semibold text-zinc-900 mb-6 flex items-center gap-2">
+                <Building className="text-[#00a651]" size={24} />
+                Project Details
+              </h3>
+              
+              <div className="space-y-4">
+                <div className="flex justify-between items-center py-3 border-b border-zinc-100">
+                  <span className="text-zinc-500">Status</span>
+                  <span className="font-semibold text-zinc-900 capitalize px-3 py-1 bg-zinc-100 rounded-full text-sm">{project.status}</span>
+                </div>
+                {/* Additional details could go here depending on what's in the data model */}
+                <div className="pt-4">
+                  <p className="text-zinc-600 leading-relaxed text-sm">
+                    This landmark project represents the pinnacle of modern architectural design and robust engineering, strategically located to offer the best of urban living and commercial viability.
+                  </p>
+                </div>
+              </div>
+
+              <button 
+                onClick={() => setShowFeedback(true)}
+                className="w-full mt-8 bg-zinc-900 text-white py-4 rounded-full font-semibold hover:bg-[#00a651] transition-colors shadow-lg shadow-zinc-200"
+              >
+                Express Interest
+              </button>
+            </div>
+
+            {/* Specific Views Card */}
+            <div className="bg-white rounded-3xl p-8 shadow-sm border border-zinc-100 flex-grow">
+              <h3 className="text-xl font-semibold text-zinc-900 mb-6">Gallery Views</h3>
+              <div className="flex flex-col gap-3">
+                {['location', 'building', 'floor_plan'].map((type) => {
+                  const idx = project.gallery.findIndex(img => img.type === type);
+                  if (idx === -1) return null;
+                  
+                  return (
+                    <button 
+                      key={type}
+                      onClick={() => setActiveImageIndex(idx)}
+                      className={`flex justify-between items-center p-4 rounded-2xl transition-all ${
+                        activeImageIndex === idx 
+                          ? 'bg-[#00a651] text-white shadow-md' 
+                          : 'bg-zinc-50 text-zinc-700 hover:bg-zinc-100'
+                      }`}
+                    >
+                      <span className="font-semibold capitalize text-sm">{type.replace('_', ' ')}</span>
+                      <ArrowRight size={18} />
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
+
+      {/* Fullscreen Viewer Modal */}
+      <AnimatePresence>
+        {isFullscreen && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-zinc-900/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-12"
+          >
+            <button 
+              onClick={() => setIsFullscreen(false)}
+              className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors z-10 bg-white/10 p-3 rounded-full backdrop-blur-sm"
+            >
+              <X size={24} />
+            </button>
+            
+            <button onClick={handlePrev} className="absolute left-6 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors z-10 bg-white/10 p-4 rounded-full backdrop-blur-sm hidden md:block">
+              <ChevronLeft size={32} />
+            </button>
+            <button onClick={handleNext} className="absolute right-6 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors z-10 bg-white/10 p-4 rounded-full backdrop-blur-sm hidden md:block">
+              <ChevronRight size={32} />
+            </button>
+
+            <img 
+              src={project.gallery[activeImageIndex]?.url} 
+              alt="Fullscreen View" 
+              className="max-w-full max-h-full object-contain drop-shadow-2xl"
+            />
+            
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-black/50 backdrop-blur-md text-white px-6 py-3 rounded-full font-medium tracking-wide shadow-xl capitalize">
+              {project.gallery[activeImageIndex]?.type.replace('_', ' ')}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Feedback Modal */}
+      {showFeedback && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-white p-8 md:p-12 w-full max-w-lg rounded-3xl shadow-2xl relative"
+          >
+            <button 
+              onClick={() => setShowFeedback(false)}
+              className="absolute top-6 right-6 text-zinc-400 hover:text-zinc-800 transition-colors"
+            >
+              <X size={24} />
+            </button>
+            <h2 className="text-2xl font-semibold mb-8 text-zinc-900">Send Your Feedback</h2>
+            <form onSubmit={(e) => { e.preventDefault(); setShowFeedback(false); }} className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-zinc-700 mb-2">Name</label>
+                <input type="text" className="w-full border-b-2 border-zinc-200 py-2 focus:outline-none focus:border-[#00a651] transition-colors bg-transparent" required />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-zinc-700 mb-2">E-mail</label>
+                <input type="email" className="w-full border-b-2 border-zinc-200 py-2 focus:outline-none focus:border-[#00a651] transition-colors bg-transparent" required />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-zinc-700 mb-2">Phone</label>
+                <input type="tel" className="w-full border-b-2 border-zinc-200 py-2 focus:outline-none focus:border-[#00a651] transition-colors bg-transparent" required />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-zinc-700 mb-2">Comments</label>
+                <textarea className="w-full border-2 border-zinc-200 rounded-xl p-4 focus:outline-none focus:border-[#00a651] transition-colors h-32 resize-none" required></textarea>
+              </div>
+              <div className="flex gap-4 pt-4">
+                <button type="submit" className="flex-1 bg-zinc-900 text-white py-3 rounded-full font-semibold hover:bg-[#00a651] transition-colors">Submit</button>
+                <button type="reset" className="px-8 py-3 rounded-full font-semibold text-zinc-600 hover:bg-zinc-100 transition-colors border border-zinc-200">Reset</button>
+              </div>
+            </form>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 }

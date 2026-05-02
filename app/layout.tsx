@@ -1,24 +1,16 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Spring Field Developments Ltd.",
-  description: "",
+  description: "Witness, As We Transform Your Land to a Landmark",
 };
 
 import Header from "./components/Header";
-import Navigation from "./components/Navigation";
+// Navigation will be integrated into Header for a modern Navbar look, but keeping it for now if needed.
 
 export default function RootLayout({
   children,
@@ -26,13 +18,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body className="bg-black text-white font-sans flex justify-center">
-        <div className="w-full max-w-[980px] bg-black mt-[10px] px-4 md:px-0">
-          <Header />
-          <Navigation />
+    <html lang="en" className="scroll-smooth">
+      <body className={`${inter.className} bg-[#f8fbf4] text-zinc-900 min-h-screen flex flex-col`}>
+        <Header />
+        <main className="flex-grow w-full">
           {children}
-        </div>
+        </main>
       </body>
     </html>
   );

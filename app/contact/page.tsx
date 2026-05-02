@@ -1,88 +1,149 @@
 'use client';
 
 import { useState } from 'react';
-import Sidebar from '../components/Sidebar';
+import { motion } from 'framer-motion';
+import { MapPin, Phone, Mail, Globe, Send, RefreshCcw } from 'lucide-react';
 
 export default function Contact() {
   const [activeTab, setActiveTab] = useState('general');
 
   return (
-    <>
-      <div className="flex flex-col md:flex-row justify-between">
-        <div className="w-full md:w-[75%]">
-          <div className="flex flex-col sm:flex-row min-h-[400px] h-auto">
-            <div className="w-full h-[200px] sm:h-auto sm:w-[35%] bg-[url('/building.png')] bg-cover bg-center border-b-[2px] sm:border-b-0 sm:border-r-[2px] border-black relative after:content-[''] after:absolute after:inset-0 after:bg-[repeating-linear-gradient(45deg,rgba(0,0,0,0.25),rgba(0,0,0,0.25)_1px,transparent_1px,transparent_5px)] after:pointer-events-none flex flex-col justify-between">
-              <div className="z-10 bg-white/70 inline-block px-4 py-2 font-bold text-[#555] text-[1.2rem] mt-2 self-start">CONTACT US</div>
-            </div>
-            <div className="w-full sm:w-[65%] bg-[#1a1a1a] flex flex-col">
-              <div className="flex border-b border-[#333]">
-                <div 
-                  className={`py-[5px] px-[15px] text-[0.85rem] border-r border-[#222] flex-1 flex justify-between items-center cursor-pointer ${activeTab === 'general' ? 'bg-[#333] text-white font-bold' : 'bg-[#a4b3d1] text-[#555]'}`}
-                  onClick={() => setActiveTab('general')}
-                >
-                  <span>GENERAL CONTACT</span>
-                  {activeTab === 'general' && <span>&gt;</span>}
-                </div>
-                <div 
-                  className={`py-[5px] px-[15px] text-[0.85rem] border-r border-[#222] flex-1 flex justify-between items-center cursor-pointer ${activeTab === 'feedback' ? 'bg-[#333] text-white font-bold' : 'bg-[#a4b3d1] text-[#555]'}`}
-                  onClick={() => setActiveTab('feedback')}
-                >
-                  <span>FEED BACK</span>
-                  {activeTab === 'feedback' && <span>&gt;</span>}
-                </div>
-              </div>
-              
-              <div className="p-[20px] flex-1 overflow-y-auto">
-                {activeTab === 'general' ? (
-                  <div className="pt-[10px]">
-                    <p className="text-white text-[1rem] mb-[20px]">Spring Field Developments Ltd.</p>
-                    <p className="text-white text-[1rem] mb-[20px]">House # 02, Road # 23/C, Gulshan-1, Dhaka-1212.</p>
-                    <p className="text-white text-[1rem] mb-[20px]">Phone: 9895548, 9893460, 8825341, 9851544</p>
-                    <p className="text-white text-[1rem] mb-[20px]">Web: www.springfieldbd.com</p>
-                    <p className="text-white text-[1rem]">E-mail: info@springfieldbd.com</p>
-                  </div>
-                ) : (
-                  <div className="pt-[10px]">
-                    <h3 className="text-white text-[1.1rem] mb-[20px] font-bold">Send Your Fedback</h3>
-                                        <form className="flex flex-col gap-3 text-white text-[0.9rem] font-bold w-full sm:w-[95%]">
-                      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
-                        <label className="mb-1 sm:mb-0">Name :</label>
-                        <input type="text" className="w-full sm:w-[300px] h-[25px] bg-white text-black px-2 outline-none" />
-                      </div>
-                      
-                      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
-                        <label className="mb-1 sm:mb-0">E-mail :</label>
-                        <input type="email" className="w-full sm:w-[300px] h-[25px] bg-white text-black px-2 outline-none" />
-                      </div>
-                      
-                      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
-                        <label className="mb-1 sm:mb-0">Phone :</label>
-                        <input type="text" className="w-full sm:w-[300px] h-[25px] bg-white text-black px-2 outline-none" />
-                      </div>
-                      
-                      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mt-2">
-                        <label className="mb-1 sm:mb-0">Comments :</label>
-                        <textarea className="w-full sm:w-[300px] h-[150px] bg-white text-black p-2 outline-none resize-none"></textarea>
-                      </div>
-                      
-                      <div className="flex justify-end mt-2 gap-2">
-                        <button type="submit" className="bg-[#f0f0f0] text-black px-3 py-1 border border-gray-400 text-[0.8rem] hover:bg-[#e0e0e0]">
-                          Submit
-                        </button>
-                        <button type="reset" className="bg-[#f0f0f0] text-black px-3 py-1 border border-gray-400 text-[0.8rem] hover:bg-[#e0e0e0]">
-                          Reset
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                )}
+    <div className="min-h-screen bg-[#f8fbf4] pt-32 pb-24 px-6 md:px-12">
+      <div className="container mx-auto max-w-5xl">
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-16"
+        >
+          <h1 className="text-4xl md:text-5xl font-light text-zinc-900 mb-4">Get in <span className="font-bold">Touch</span></h1>
+          <p className="text-zinc-500 text-lg">We would love to hear from you. Select an option below to reach out.</p>
+        </motion.div>
+
+        <div className="bg-white rounded-3xl shadow-xl border border-zinc-100 overflow-hidden flex flex-col md:flex-row">
+          
+          {/* Sidebar Tabs */}
+          <div className="w-full md:w-1/3 bg-zinc-50 border-r border-zinc-100 p-8 flex flex-col gap-4">
+            <h3 className="text-sm font-bold tracking-widest text-[#00a651] uppercase mb-4">Contact Options</h3>
+            <button
+              onClick={() => setActiveTab('general')}
+              className={`text-left px-6 py-4 rounded-2xl transition-all font-medium ${
+                activeTab === 'general' 
+                  ? 'bg-white shadow-md text-zinc-900 border border-zinc-100' 
+                  : 'text-zinc-500 hover:bg-zinc-100'
+              }`}
+            >
+              General Contact
+            </button>
+            <button
+              onClick={() => setActiveTab('feedback')}
+              className={`text-left px-6 py-4 rounded-2xl transition-all font-medium ${
+                activeTab === 'feedback' 
+                  ? 'bg-white shadow-md text-zinc-900 border border-zinc-100' 
+                  : 'text-zinc-500 hover:bg-zinc-100'
+              }`}
+            >
+              Send Feedback
+            </button>
+
+            <div className="mt-auto pt-8">
+              <div className="w-full h-48 rounded-2xl overflow-hidden relative">
+                <img src="/building.png" alt="Office" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-black/20 mix-blend-multiply"></div>
               </div>
             </div>
           </div>
+
+          {/* Main Content Area */}
+          <div className="w-full md:w-2/3 p-8 md:p-12">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              {activeTab === 'general' ? (
+                <div className="space-y-10">
+                  <h2 className="text-3xl font-light text-zinc-900 mb-8">Head Office</h2>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="flex items-start gap-4">
+                      <div className="bg-zinc-100 p-3 rounded-full text-[#00a651] shrink-0">
+                        <MapPin size={24} />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-zinc-900 mb-1">Address</h4>
+                        <p className="text-zinc-500 leading-relaxed">Spring Field Developments Ltd.<br/>House # 02, Road # 23/C,<br/>Gulshan-1, Dhaka-1212.</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-4">
+                      <div className="bg-zinc-100 p-3 rounded-full text-[#00a651] shrink-0">
+                        <Phone size={24} />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-zinc-900 mb-1">Phone</h4>
+                        <p className="text-zinc-500">9895548, 9893460<br/>8825341, 9851544</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-4">
+                      <div className="bg-zinc-100 p-3 rounded-full text-[#00a651] shrink-0">
+                        <Mail size={24} />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-zinc-900 mb-1">Email</h4>
+                        <p className="text-zinc-500">info@springfieldbd.com</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-4">
+                      <div className="bg-zinc-100 p-3 rounded-full text-[#00a651] shrink-0">
+                        <Globe size={24} />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-zinc-900 mb-1">Website</h4>
+                        <p className="text-zinc-500">www.springfieldbd.com</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <h2 className="text-3xl font-light text-zinc-900 mb-8">Send Your Feedback</h2>
+                  <form className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block text-sm font-medium text-zinc-700 mb-2">Name</label>
+                        <input type="text" className="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-3 focus:outline-none focus:border-[#00a651] focus:bg-white transition-colors" required />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-zinc-700 mb-2">E-mail</label>
+                        <input type="email" className="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-3 focus:outline-none focus:border-[#00a651] focus:bg-white transition-colors" required />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-zinc-700 mb-2">Phone</label>
+                      <input type="tel" className="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-3 focus:outline-none focus:border-[#00a651] focus:bg-white transition-colors" required />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-zinc-700 mb-2">Comments</label>
+                      <textarea className="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-3 focus:outline-none focus:border-[#00a651] focus:bg-white transition-colors h-32 resize-none" required></textarea>
+                    </div>
+                    <div className="flex gap-4 pt-4">
+                      <button type="submit" className="flex items-center justify-center gap-2 flex-1 bg-zinc-900 text-white py-3 rounded-xl font-semibold hover:bg-[#00a651] transition-colors shadow-md hover:shadow-lg">
+                        <Send size={18} /> Submit
+                      </button>
+                      <button type="reset" className="flex items-center justify-center gap-2 px-8 py-3 rounded-xl font-semibold text-zinc-600 hover:bg-zinc-100 transition-colors border border-zinc-200">
+                        <RefreshCcw size={18} /> Reset
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              )}
+            </motion.div>
+          </div>
         </div>
-        
-        <Sidebar />
       </div>
-    </>
+    </div>
   );
 }

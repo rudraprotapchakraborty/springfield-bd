@@ -1,1 +1,26 @@
 @import "tailwindcss";
+
+@theme {
+  --color-primary: #f8fbf4;
+  --color-accent: #00a651; /* Green from the logo */
+  --color-brand: #f36523; /* Orange from the logo */
+  
+  /* Custom Olive theme replacing standard zinc */
+  --color-zinc-50: #f4f6f0;
+  --color-zinc-100: #e3ebd6;
+  --color-zinc-200: #ccdcb5;
+  --color-zinc-300: #aebc91;
+  --color-zinc-400: #8f9f72;
+  --color-zinc-500: #718155;
+  --color-zinc-600: #596c3d; /* Logo background */
+  --color-zinc-700: #44532f;
+  --color-zinc-800: #323d22;
+  --color-zinc-900: #212916;
+  --color-zinc-950: #11150b;
+}
+
+@layer base {
+  body {
+    @apply bg-[#f8fbf4] text-zinc-900 antialiased overflow-x-hidden;
+  }
+}

@@ -1,38 +1,75 @@
 'use client';
 
-import Sidebar from '../components/Sidebar';
+import { motion } from 'framer-motion';
+import { Calendar, Bell } from 'lucide-react';
 
 export default function NoticeBoard() {
+  const notices = [
+    {
+      id: 1,
+      title: "Eid-Ul Azha",
+      date: "03 October, 2026",
+      content: "This is to inform all of our SFD staff that our office will remain closed from 03 October, 2026 to 09 October, 2026 due to the holy occasion of Eid-Ul-Azha.",
+      type: "Holiday"
+    },
+    {
+      id: 2,
+      title: "Quarterly Townhall Meeting",
+      date: "15 November, 2026",
+      content: "A mandatory townhall meeting will be held at the main conference room to discuss Q4 goals and project milestones. Attendance is strictly required.",
+      type: "Event"
+    }
+  ];
+
   return (
-    <>
-      <div className="flex flex-col md:flex-row justify-between">
-        <div className="w-full md:w-[75%]">
-          <div className="flex flex-col sm:flex-row min-h-[400px] h-auto">
-            <div className="w-full h-[200px] sm:h-auto sm:w-[35%] bg-[url('/building.png')] bg-cover bg-center border-b-[2px] sm:border-b-0 sm:border-r-[2px] border-black relative after:content-[''] after:absolute after:inset-0 after:bg-[repeating-linear-gradient(45deg,rgba(0,0,0,0.25),rgba(0,0,0,0.25)_1px,transparent_1px,transparent_5px)] after:pointer-events-none flex flex-col justify-between">
-              <div className="z-10 bg-white/70 inline-block px-4 py-2 font-bold text-[#555] text-[1.2rem] mt-2 self-start">NOTICE BOARD</div>
+    <div className="min-h-screen bg-[#f8fbf4] pt-32 pb-24 px-6 md:px-12">
+      <div className="container mx-auto max-w-4xl">
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-16"
+        >
+          <div className="flex justify-center mb-4">
+            <div className="bg-zinc-100 p-4 rounded-full text-[#00a651]">
+              <Bell size={32} />
             </div>
-            <div className="w-full sm:w-[65%] bg-[#1a1a1a] flex flex-col">
-              <div className="flex border-b border-[#333]">
-                <div className="py-[5px] px-[15px] text-[0.85rem] border-r border-[#222] flex-1 flex justify-between items-center cursor-default bg-[#333] text-white font-bold">
-                  <span>NOTICE BOARD</span>
-                  <span>&gt;</span>
+          </div>
+          <h1 className="text-4xl md:text-5xl font-light text-zinc-900 mb-4">Notice <span className="font-bold">Board</span></h1>
+          <p className="text-zinc-500 text-lg">Stay updated with the latest announcements and important notices.</p>
+        </motion.div>
+
+        <div className="space-y-6">
+          {notices.map((notice, index) => (
+            <motion.div 
+              key={notice.id}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className="bg-white p-8 rounded-3xl shadow-sm border border-zinc-100 hover:shadow-md transition-shadow relative overflow-hidden group"
+            >
+              <div className="absolute top-0 left-0 w-2 h-full bg-[#00a651] transform origin-bottom scale-y-50 group-hover:scale-y-100 transition-transform duration-300"></div>
+              
+              <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-4">
+                <h3 className="text-2xl font-semibold text-zinc-900">{notice.title}</h3>
+                
+                <div className="flex items-center gap-4 text-sm font-medium">
+                  <span className="bg-zinc-100 text-zinc-600 px-3 py-1 rounded-full uppercase tracking-wider text-xs">
+                    {notice.type}
+                  </span>
+                  <span className="flex items-center gap-2 text-zinc-500">
+                    <Calendar size={16} />
+                    {notice.date}
+                  </span>
                 </div>
               </div>
               
-              <div className="p-[20px] flex-1 overflow-y-auto">
-                <div className="pt-[10px]">
-                  <h3 className="text-white text-[1.1rem] mb-[40px] font-bold">Eid-Ul Azah</h3>
-                  <p className="text-white text-[0.9rem] leading-relaxed">
-                    This is to inform all of our SFD staff that our office will remain closed from <span className="font-bold italic">03 October, 2014 to 09 October, 2014</span> due to the holy occasion of <span className="font-bold italic">Eid-Ul-Azah</span>.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+              <p className="text-zinc-600 leading-relaxed">
+                {notice.content}
+              </p>
+            </motion.div>
+          ))}
         </div>
-        
-        <Sidebar />
       </div>
-    </>
+    </div>
   );
 }

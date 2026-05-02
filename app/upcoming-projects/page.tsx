@@ -2,112 +2,136 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import Sidebar from './../components/Sidebar';
+import { motion } from 'framer-motion';
 import { projects } from './../data/projects';
+import { ArrowRight, Info } from 'lucide-react';
 
 export default function UpcomingProjects() {
   const [feedbackProject, setFeedbackProject] = useState<string | null>(null);
 
   const filteredProjects = projects.filter(p => p.status === 'upcoming');
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+  };
+
   return (
-    <>
-      <div className="flex flex-col md:flex-row justify-between relative">
-      <div className="w-full md:w-[75%] bg-black">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[2px] bg-black">
-          {/* Left Cell - Spans 2 Rows on Desktop */}
-          <div className="lg:col-span-1 lg:row-span-2 sm:col-span-2 h-[200px] lg:h-auto relative bg-[url('/building.png')] bg-cover bg-center after:content-[''] after:absolute after:inset-0 after:bg-[repeating-linear-gradient(45deg,rgba(255,255,255,0.4),rgba(255,255,255,0.4)_1px,transparent_1px,transparent_5px)] after:pointer-events-none">
-            <div className="absolute inset-0 bg-gradient-to-br from-white/70 via-transparent to-transparent z-10"></div>
-            <div className="relative z-20 p-[15px]">
-              <div className="text-[#444] font-bold text-[18px] mb-[2px]">UPCOMING</div>
-              <div className="text-[#333] text-[14px]">All Projects</div>
+    <div className="min-h-screen bg-[#f8fbf4] pt-32 pb-24 px-6 md:px-12">
+      <div className="container mx-auto max-w-7xl">
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-16 text-center md:text-left"
+        >
+          <h1 className="text-4xl md:text-5xl font-light text-zinc-900 mb-4">Upcoming <span className="font-bold">Projects</span></h1>
+          <p className="text-zinc-500 text-lg">Discover the future landmarks we are planning to build.</p>
+        </motion.div>
+
+        {filteredProjects.length === 0 ? (
+          <div className="flex items-center justify-center min-h-[40vh] bg-white rounded-3xl shadow-sm border border-zinc-100">
+            <div className="text-zinc-400 text-2xl font-light flex items-center gap-3">
+              <Info size={32} />
+              No upcoming projects available at the moment.
             </div>
           </div>
-
-          {filteredProjects.length === 0 ? (
-            <div className="sm:col-span-2 lg:col-span-3 lg:row-span-2 flex items-center justify-center bg-[#1a1a1a] min-h-[400px]">
-              <div className="text-[#888] text-[24px] font-bold">no upcoming projects</div>
-            </div>
-          ) : (
-            <>
-              {/* Project Cards */}
-              {filteredProjects.map((project, index) => {
-              return (
-                <div 
-                  key={index} 
-                  className="bg-[#b5b5b5] p-[10px] flex flex-col justify-between h-[200px]"
-                >
-                  <div>
-                    <div className="text-[#55647a] font-bold text-[11px] uppercase mb-[2px]">{project.title}</div>
-                    <div className="text-[#666] text-[10px] leading-[1.1] h-[22px] overflow-hidden">{project.address}</div>
+        ) : (
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            animate="show"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            {filteredProjects.map((project, index) => (
+              <motion.div 
+                key={index} 
+                variants={itemVariants}
+                className="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-zinc-100 flex flex-col h-full"
+              >
+                <div className="relative h-64 overflow-hidden">
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10" />
+                  <img 
+                    src={project.image || "/building.png"} 
+                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" 
+                    alt={project.title} 
+                  />
+                  <div className="absolute top-4 right-4 z-20 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-[#00a651]">
+                    UPCOMING
                   </div>
+                </div>
+                
+                <div className="p-8 flex flex-col flex-grow">
+                  <h3 className="text-xl font-semibold text-zinc-900 mb-2">{project.title}</h3>
+                  <p className="text-zinc-500 text-sm mb-8 flex-grow">{project.address}</p>
                   
-                  <div className="relative w-full h-[95px] mt-[5px] mb-[10px]">
-                    <img src={project.image || "/building.png"} className="w-full h-full object-cover" alt={project.title} />
-                    <div className="absolute top-0 left-0 bg-[#5cb85c] w-[16px] h-[16px] flex items-center justify-center p-[3px]">
-                      <img src="/file.svg" className="w-full h-full object-contain" alt="" style={{ filter: 'brightness(0) invert(1)' }} />
-                    </div>
-                  </div>
-                  
-                  <div className="flex justify-between gap-[5px] mt-auto">
-                    <Link href={`/projects/${project.slug}`} className="flex-1 bg-white flex justify-between items-center px-[6px] py-[4px] text-[10px] font-bold text-[#555] shadow-[0_1px_2px_rgba(0,0,0,0.2)] hover:bg-[#f0f0f0] transition-colors no-underline">
-                      <span>Details</span>
-                      <span className="text-[#aaa] font-normal text-[12px] leading-none">&gt;</span>
+                  <div className="flex justify-between items-center pt-6 border-t border-zinc-100">
+                    <Link 
+                      href={`/projects/${project.slug}`} 
+                      className="flex items-center gap-2 text-sm font-semibold text-zinc-800 hover:text-[#00a651] transition-colors"
+                    >
+                      View Details <ArrowRight size={16} />
                     </Link>
                     <button 
                       onClick={() => setFeedbackProject(project.title)}
-                      className="flex-1 bg-white flex justify-between items-center px-[6px] py-[4px] text-[10px] font-bold text-[#555] shadow-[0_1px_2px_rgba(0,0,0,0.2)] hover:bg-[#f0f0f0] transition-colors"
+                      className="text-sm font-medium text-zinc-500 hover:text-zinc-900 transition-colors"
                     >
-                      <span>Show interest</span>
-                      <span className="text-[#aaa] font-normal text-[12px] leading-none">&gt;</span>
+                      Show Interest
                     </button>
                   </div>
                 </div>
-              );
-            })}
-            </>
-          )}
-        </div>
-      </div>
-      
-      <Sidebar />
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
       </div>
 
       {feedbackProject && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-          <div className="bg-white p-[20px] md:p-[30px] w-full md:w-[550px] max-w-[550px] shadow-2xl relative border-[2px] border-[#aaa] max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-white p-8 md:p-12 w-full max-w-lg rounded-3xl shadow-2xl relative"
+          >
             <button 
               onClick={() => setFeedbackProject(null)}
-              className="absolute top-[10px] right-[15px] text-[20px] font-bold text-gray-600 hover:text-black"
+              className="absolute top-6 right-6 text-zinc-400 hover:text-zinc-800 transition-colors"
             >
               &times;
             </button>
-            <h2 className="font-serif font-bold text-[22px] mb-[20px] text-black">Send Your Fedback</h2>
-            <form onSubmit={(e) => { e.preventDefault(); setFeedbackProject(null); }}>
-              <div className="flex mb-[15px] items-center">
-                <label className="w-[120px] font-serif font-bold text-[18px] text-black">Name :</label>
-                <input type="text" className="border border-gray-400 flex-1 px-[5px] py-[3px] text-[16px] text-black" />
+            <h2 className="text-2xl font-semibold mb-8 text-zinc-900">Send Your Feedback</h2>
+            <form onSubmit={(e) => { e.preventDefault(); setFeedbackProject(null); }} className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-zinc-700 mb-2">Name</label>
+                <input type="text" className="w-full border-b-2 border-zinc-200 py-2 focus:outline-none focus:border-[#00a651] transition-colors bg-transparent" required />
               </div>
-              <div className="flex mb-[15px] items-center">
-                <label className="w-[120px] font-serif font-bold text-[18px] text-black">E-mail :</label>
-                <input type="email" className="border border-gray-400 flex-1 px-[5px] py-[3px] text-[16px] text-black" />
+              <div>
+                <label className="block text-sm font-medium text-zinc-700 mb-2">E-mail</label>
+                <input type="email" className="w-full border-b-2 border-zinc-200 py-2 focus:outline-none focus:border-[#00a651] transition-colors bg-transparent" required />
               </div>
-              <div className="flex mb-[15px] items-center">
-                <label className="w-[120px] font-serif font-bold text-[18px] text-black">Phone :</label>
-                <input type="tel" className="border border-gray-400 flex-1 px-[5px] py-[3px] text-[16px] text-black" />
+              <div>
+                <label className="block text-sm font-medium text-zinc-700 mb-2">Phone</label>
+                <input type="tel" className="w-full border-b-2 border-zinc-200 py-2 focus:outline-none focus:border-[#00a651] transition-colors bg-transparent" required />
               </div>
-              <div className="flex mb-[20px] items-start">
-                <label className="w-[120px] font-serif font-bold text-[18px] mt-[2px] text-black">Comments :</label>
-                <textarea className="border border-gray-400 flex-1 h-[140px] px-[5px] py-[3px] text-[16px] resize-y text-black"></textarea>
+              <div>
+                <label className="block text-sm font-medium text-zinc-700 mb-2">Comments</label>
+                <textarea className="w-full border-2 border-zinc-200 rounded-xl p-4 focus:outline-none focus:border-[#00a651] transition-colors h-32 resize-none" required></textarea>
               </div>
-              <div className="flex md:ml-[120px] gap-[10px] mt-[10px]">
-                <button type="submit" className="border border-gray-400 bg-[#f8f8f8] px-[15px] py-[3px] text-[16px] text-black hover:bg-[#e8e8e8]">Submit</button>
-                <button type="reset" className="border border-gray-400 bg-[#f8f8f8] px-[15px] py-[3px] text-[16px] text-black hover:bg-[#e8e8e8]">Reset</button>
+              <div className="flex gap-4 pt-4">
+                <button type="submit" className="flex-1 bg-zinc-900 text-white py-3 rounded-full font-semibold hover:bg-[#00a651] transition-colors">Submit</button>
+                <button type="reset" className="px-8 py-3 rounded-full font-semibold text-zinc-600 hover:bg-zinc-100 transition-colors border border-zinc-200">Reset</button>
               </div>
             </form>
-          </div>
+          </motion.div>
         </div>
       )}
-    </>
+    </div>
   );
 }
