@@ -35,15 +35,15 @@ export default function ValuableCustomerList() {
       <div className="flex flex-col md:flex-row justify-between">
         <div className="w-full md:w-[75%]">
           <div className="flex flex-col sm:flex-row min-h-[400px] h-auto">
-            <div className="w-full h-[200px] sm:h-auto sm:w-[35%] bg-[url('/building.png')] bg-cover bg-center border-b-[2px] sm:border-b-0 sm:border-r-[2px] border-black relative after:content-[''] after:absolute after:inset-0 after:bg-[repeating-linear-gradient(45deg,rgba(0,0,0,0.25),rgba(0,0,0,0.25)_1px,transparent_1px,transparent_5px)] after:pointer-events-none flex flex-col justify-between">
-              <div className="z-10 bg-white/70 inline-block px-4 py-2 font-bold text-[#555] text-[1.0rem] mt-2 self-start uppercase">VALUABLE CUSTOMER LIST</div>
+            <div className="w-full h-[200px] sm:h-auto sm:w-[35%] bg-[url('/building.png')] bg-cover bg-center border-b-[2px] sm:border-b-0 sm:border-r-[2px] border-black dark:border-zinc-800 relative after:content-[''] after:absolute after:inset-0 after:bg-[repeating-linear-gradient(45deg,rgba(0,0,0,0.25),rgba(0,0,0,0.25)_1px,transparent_1px,transparent_5px)] after:pointer-events-none flex flex-col justify-between transition-colors">
+              <div className="z-10 bg-white/70 dark:bg-zinc-800/70 inline-block px-4 py-2 font-bold text-[#555] dark:text-zinc-300 text-[1.0rem] mt-2 self-start uppercase backdrop-blur-sm transition-colors">VALUABLE CUSTOMER LIST</div>
             </div>
-            <div className="w-full sm:w-[65%] bg-[#1a1a1a] p-[30px] flex-1 overflow-y-auto">
-              <h3 className="text-white text-[1rem] font-bold mb-[20px] underline underline-offset-4 decoration-2">
+            <div className="w-full sm:w-[65%] bg-[#1a1a1a] dark:bg-zinc-950 p-[30px] flex-1 overflow-y-auto transition-colors">
+              <h3 className="text-white dark:text-zinc-100 text-[1rem] font-bold mb-[20px] underline underline-offset-4 decoration-2">
                 Our Honorable Clients :
               </h3>
               
-              <div className="flex flex-col gap-[15px] text-white text-[0.9rem]">
+              <div className="flex flex-col gap-[15px] text-white dark:text-zinc-200 text-[0.9rem]">
                 {clients.map((client, idx) => (
                   <div key={idx} className="flex">
                     <div className="w-[50px] shrink-0">{client.num}</div>
