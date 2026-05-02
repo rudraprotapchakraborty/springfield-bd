@@ -8,7 +8,7 @@ export default function EmployeeList() {
       <div className="flex flex-col md:flex-row justify-between">
         <div className="w-full md:w-[75%]">
           <div className="flex flex-col sm:flex-row min-h-[400px] h-auto">
-            <div className="w-full h-[200px] sm:h-auto sm:w-[35%] bg-[url('/building.png')] bg-cover bg-center border-b-[2px] sm:border-b-0 sm:border-r-[2px] border-black dark:border-zinc-800 relative after:content-[''] after:absolute after:inset-0 after:bg-[repeating-linear-gradient(45deg,rgba(0,0,0,0.25),rgba(0,0,0,0.25)_1px,transparent_1px,transparent_5px)] after:pointer-events-none flex flex-col justify-between transition-colors">
+            <div className="w-full h-[200px] sm:h-auto sm:w-[35%] bg-[url('/building2.png')] bg-cover bg-center border-b-[2px] sm:border-b-0 sm:border-r-[2px] border-black dark:border-zinc-800 relative after:content-[''] after:absolute after:inset-0 after:bg-[repeating-linear-gradient(45deg,rgba(0,0,0,0.25),rgba(0,0,0,0.25)_1px,transparent_1px,transparent_5px)] after:pointer-events-none flex flex-col justify-between transition-colors">
               <div className="z-10 bg-white/70 dark:bg-zinc-800/70 inline-block px-4 py-2 font-bold text-[#555] dark:text-zinc-300 text-[1.2rem] mt-2 self-start uppercase backdrop-blur-sm transition-colors">EMPLOYEE LIST</div>
             </div>
             <div className="w-full sm:w-[65%] bg-[#1a1a1a] dark:bg-zinc-950 p-[20px] transition-colors">
@@ -16,7 +16,7 @@ export default function EmployeeList() {
             </div>
           </div>
         </div>
-        
+
         <Sidebar />
       </div>
     </>

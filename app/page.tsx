@@ -101,21 +101,24 @@ export default function Home() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 300 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
             style={{ y: buildingY, scale: buildingScale }}
-            className="w-full md:w-3/5 flex justify-center items-start h-[45vh] md:h-[65vh] relative z-0 order-1 md:order-2 overflow-hidden"
+            className="w-full md:w-3/5 flex justify-center items-start h-[40vh] md:h-[55vh] relative z-0 order-1 md:order-2 -mt-32 md:-mt-56"
           >
-            <div className="relative w-full h-[150%] max-w-2xl -mt-[10%]">
+            <motion.div 
+              initial={{ opacity: 0, y: 300 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.8, delay: 1.5, ease: [0.16, 1, 0.3, 1] }}
+              className="relative w-full h-[180%] max-w-2xl"
+            >
               <Image
-                src="/building.png"
+                src="/building2.png"
                 alt="Modern Landmark Building"
                 fill
                 className="object-contain object-top"
                 priority
               />
-            </div>
+            </motion.div>
           </motion.div>
 
           {/* Right Stats */}

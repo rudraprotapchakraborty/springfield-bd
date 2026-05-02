@@ -56,11 +56,11 @@ export default function Header() {
       <div className="container mx-auto px-4 md:px-8 lg:px-12 flex justify-between items-center h-full">
         <Link href="/" className="flex items-center gap-3 md:gap-4 relative z-10">
           <Image
-            src="/logo.png"
+            src={mounted && resolvedTheme === 'dark' ? '/logo2.png' : '/logo.png'}
             alt="Spring Field Developments Ltd."
             width={220}
             height={90}
-            className="w-auto h-14 md:h-20 object-contain drop-shadow-xl bg-white/40 dark:bg-white/10 md:bg-transparent backdrop-blur-sm md:backdrop-blur-none rounded-2xl p-1"
+            className="w-auto h-14 md:h-20 object-contain drop-shadow-xl"
             priority
           />
           <div className="hidden lg:flex flex-col">

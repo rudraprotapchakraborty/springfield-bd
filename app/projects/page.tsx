@@ -25,8 +25,8 @@ export default function AllProjects() {
   };
 
   const filteredProjects = projects.filter((project) => {
-    const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          project.address.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      project.address.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesStatus = statusFilter === 'all' || project.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
@@ -34,7 +34,7 @@ export default function AllProjects() {
   return (
     <div className="min-h-screen bg-[#f8fbf4] dark:bg-zinc-950 pt-32 pb-24 px-6 md:px-12 transition-colors duration-300">
       <div className="container mx-auto max-w-7xl">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           className="mb-12 text-center md:text-left"
@@ -44,7 +44,7 @@ export default function AllProjects() {
         </motion.div>
 
         {/* Filters and Search */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           className="mb-12 flex flex-col md:flex-row gap-6 justify-between items-center bg-white dark:bg-zinc-900 p-4 rounded-2xl shadow-sm border border-zinc-100 dark:border-zinc-800"
@@ -54,11 +54,10 @@ export default function AllProjects() {
               <button
                 key={status}
                 onClick={() => setStatusFilter(status)}
-                className={`px-6 py-2 rounded-full text-sm font-semibold capitalize transition-all ${
-                  statusFilter === status 
-                    ? 'bg-zinc-900 dark:bg-zinc-800 text-white dark:text-zinc-100 shadow-md' 
+                className={`px-6 py-2 rounded-full text-sm font-semibold capitalize transition-all ${statusFilter === status
+                    ? 'bg-zinc-900 dark:bg-zinc-800 text-white dark:text-zinc-100 shadow-md'
                     : 'bg-zinc-50 dark:bg-zinc-800/50 text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800'
-                }`}
+                  }`}
               >
                 {status}
               </button>
@@ -66,9 +65,9 @@ export default function AllProjects() {
           </div>
 
           <div className="relative w-full md:w-80">
-            <input 
-              type="text" 
-              placeholder="Search projects..." 
+            <input
+              type="text"
+              placeholder="Search projects..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-12 pr-4 py-3 bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-full focus:outline-none focus:border-[#00a651] focus:bg-white dark:focus:bg-zinc-900 text-zinc-900 dark:text-zinc-100 transition-colors text-sm"
@@ -79,7 +78,7 @@ export default function AllProjects() {
 
         <AnimatePresence mode="wait">
           {filteredProjects.length === 0 ? (
-            <motion.div 
+            <motion.div
               key="empty"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -92,7 +91,7 @@ export default function AllProjects() {
               </div>
             </motion.div>
           ) : (
-            <motion.div 
+            <motion.div
               key="grid"
               variants={containerVariants}
               initial="hidden"
@@ -100,36 +99,36 @@ export default function AllProjects() {
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
             >
               {filteredProjects.map((project, index) => (
-                <motion.div 
-                  key={project.slug} 
+                <motion.div
+                  key={project.slug}
                   variants={itemVariants}
                   layout
                   className="group bg-white dark:bg-zinc-900 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-zinc-100 dark:border-zinc-800 flex flex-col h-full"
                 >
                   <div className="relative h-64 overflow-hidden">
                     <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10" />
-                    <img 
-                      src={project.image || "/building.png"} 
-                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" 
-                      alt={project.title} 
+                    <img
+                      src={project.image || "/building2.png"}
+                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                      alt={project.title}
                     />
                     <div className="absolute top-4 right-4 z-20 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-[#00a651] uppercase">
                       {project.status}
                     </div>
                   </div>
-                  
+
                   <div className="p-8 flex flex-col flex-grow">
                     <h3 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100 mb-2">{project.title}</h3>
                     <p className="text-zinc-500 dark:text-zinc-400 text-sm mb-8 flex-grow">{project.address}</p>
-                    
+
                     <div className="flex justify-between items-center pt-6 border-t border-zinc-100 dark:border-zinc-800">
-                      <Link 
-                        href={`/projects/${project.slug}`} 
+                      <Link
+                        href={`/projects/${project.slug}`}
                         className="flex items-center gap-2 text-sm font-semibold text-zinc-800 dark:text-zinc-200 hover:text-[#00a651] dark:hover:text-[#00a651] transition-colors"
                       >
                         View Details <ArrowRight size={16} />
                       </Link>
-                      <button 
+                      <button
                         onClick={() => setFeedbackProject(project.title)}
                         className="text-sm font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
                       >
@@ -146,12 +145,12 @@ export default function AllProjects() {
 
       {feedbackProject && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             className="bg-white dark:bg-zinc-900 p-8 md:p-12 w-full max-w-lg rounded-3xl shadow-2xl relative"
           >
-            <button 
+            <button
               onClick={() => setFeedbackProject(null)}
               className="absolute top-6 right-6 text-zinc-400 dark:text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors"
             >
