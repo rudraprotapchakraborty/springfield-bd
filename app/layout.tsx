@@ -1,19 +1,40 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Fraunces } from "next/font/google";
 import { Suspense } from "react";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-fraunces",
+  display: "swap",
+  axes: ["opsz", "SOFT", "WONK"],
+});
 
 export const metadata: Metadata = {
-  title: "Spring Field Developments Ltd.",
-  description: "Witness, As We Transform Your Land to a Landmark",
+  title: "Spring Field Developments Ltd. — Land to Landmark",
+  description:
+    "Witness, As We Transform Your Land to a Landmark. Premier real estate developer crafting modern landmarks across Bangladesh.",
+  keywords: [
+    "Spring Field Developments",
+    "real estate Bangladesh",
+    "Dhaka apartments",
+    "luxury living",
+    "developer",
+  ],
 };
 
 import Header from "./components/Header";
 import PageLoader from "./components/PageLoader";
 import Footer from "./components/Footer";
 import CustomCursor from "./components/CustomCursor";
+import FloatingActions from "./components/FloatingActions";
+import BackgroundFx from "./components/BackgroundFx";
 import { Providers } from "./providers";
 
 export default function RootLayout({
@@ -22,17 +43,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
-      <body className={`${inter.className} bg-[#f8fbf4] dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 min-h-screen flex flex-col transition-colors duration-300`}>
+    <html
+      lang="en"
+      className={`scroll-smooth ${inter.variable} ${fraunces.variable}`}
+      suppressHydrationWarning
+    >
+      <body
+        className={`${inter.className} bg-[#f8fbf4] dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 min-h-screen flex flex-col transition-colors duration-300 relative`}
+      >
         <Providers attribute="data-theme" defaultTheme="system" enableSystem>
+          <BackgroundFx />
           <CustomCursor />
           <Suspense fallback={null}>
             <PageLoader />
           </Suspense>
           <Header />
-          <main className="flex-grow w-full">
-            {children}
-          </main>
+          <main className="flex-grow w-full relative z-10">{children}</main>
+          <FloatingActions />
           <Footer />
         </Providers>
       </body>
