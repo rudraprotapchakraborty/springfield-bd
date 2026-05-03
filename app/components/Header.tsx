@@ -5,7 +5,19 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
-import { Menu, X, Sun, Moon, ChevronDown, Building2, Hammer, Sparkles, ListChecks } from 'lucide-react';
+import {
+  Menu,
+  X,
+  Sun,
+  Moon,
+  ChevronDown,
+  Building2,
+  Hammer,
+  Sparkles,
+  ListChecks,
+  Users,
+  Crown,
+} from 'lucide-react';
 import { useTheme } from 'next-themes';
 
 interface NavLink {
@@ -26,14 +38,27 @@ const navLinks: NavLink[] = [
       { name: 'Completed', href: '/completed-projects', description: 'Delivered landmarks', icon: Building2 },
     ],
   },
+  {
+    name: 'Company',
+    href: '/employee-list',
+    children: [
+      {
+        name: 'Our Team',
+        href: '/employee-list',
+        description: 'The people behind every landmark',
+        icon: Users,
+      },
+      {
+        name: 'Valued Customers',
+        href: '/valuable-customer-list',
+        description: 'Leaders & families who trust us',
+        icon: Crown,
+      },
+    ],
+  },
   { name: 'Career', href: '/career' },
   { name: 'Notice Board', href: '/notice-board' },
   { name: 'Contact', href: '/contact' },
-];
-
-const secondaryLinks = [
-  { name: 'Employees', href: '/employee-list' },
-  { name: 'Customers', href: '/valuable-customer-list' },
 ];
 
 export default function Header() {
@@ -269,18 +294,6 @@ export default function Header() {
                   )}
                 </div>
               ))}
-              <div className="mt-2 pt-3 border-t border-zinc-100 dark:border-zinc-800 flex flex-wrap gap-2">
-                {secondaryLinks.map((l) => (
-                  <Link
-                    key={l.href}
-                    href={l.href}
-                    onClick={handleNavigate}
-                    className="text-xs uppercase tracking-widest font-bold text-zinc-500 dark:text-zinc-400 px-3 py-2 rounded-full bg-zinc-100 dark:bg-zinc-900 hover:bg-[#00a651]/10 hover:text-[#00a651] transition-colors"
-                  >
-                    {l.name}
-                  </Link>
-                ))}
-              </div>
               <Link
                 href="/contact"
                 onClick={handleNavigate}
